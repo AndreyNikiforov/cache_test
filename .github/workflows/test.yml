@@ -65,11 +65,11 @@ jobs:
         # cache-from: type=local,src=.cache
         # cache-to: type=local,dest=.cache-new,mode=max
         file: Dockerfile.check
-        outputs: type=local,dest=dist
+        outputs: type=local,dest=check
 
     - name: Check for output file
       run: |
-        ls -la dist
+        ls -la check
 
     # - name: Build with docker
     #     run: |
