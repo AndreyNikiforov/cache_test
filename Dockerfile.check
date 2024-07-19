@@ -1,0 +1,10 @@
+FROM ubuntu AS checker
+WORKDIR /app
+RUN \
+    --mount=type=cache,target=/app/cache \
+    mkdir -p /app/dist && \
+    cp /app/cache/ /app/dist
+
+FROM scratch
+WORKDIR /
+COPY --from=checker /app/dist .

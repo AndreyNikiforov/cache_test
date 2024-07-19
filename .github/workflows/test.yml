@@ -26,7 +26,7 @@ jobs:
       with:
         path: |
           .cache
-        key: cache-${{ hashFiles('Dockerfile') }}
+        key: cache-${{ hashFiles('Dockerfile', 'Dockerfile.check') }}
         restore-keys: |
           cache-
     
