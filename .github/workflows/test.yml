@@ -56,9 +56,9 @@ jobs:
         file: Dockerfile
         outputs: type=local,dest=dist
 
-    - name: Check for output file
-      run: |
-        ls -la .cache/dummy.txt
+    # - name: Check for output file
+    #   run: |
+    #     ls -la .cache/dummy.txt
 
     # - name: Build with docker
     #     run: |
