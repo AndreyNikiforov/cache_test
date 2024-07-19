@@ -36,7 +36,7 @@ jobs:
       with:
         cache-map: |
           {
-            "cache": "/app/cache/",
+            "cache": "/app/cache/"
           }
 
     - name: Build and push
