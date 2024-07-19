@@ -56,9 +56,20 @@ jobs:
         file: Dockerfile
         outputs: type=local,dest=dist
 
-    # - name: Check for output file
-    #   run: |
-    #     ls -la .cache/dummy.txt
+    - name: Check
+      uses: docker/build-push-action@v6
+      with:
+        push: false
+        # platforms: ${{ matrix.platform[0] }}
+        # do not cache layers
+        # cache-from: type=local,src=.cache
+        # cache-to: type=local,dest=.cache-new,mode=max
+        file: Dockerfile.check
+        outputs: type=local,dest=dist
+
+    - name: Check for output file
+      run: |
+        ls -la dist
 
     # - name: Build with docker
     #     run: |
