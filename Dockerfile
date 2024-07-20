@@ -1,7 +1,7 @@
 FROM ubuntu
 WORKDIR /app
+# --mount=type=cache,target=/app/cache \
 RUN \
-    --mount=type=cache,target=/app/cache \
     date > /app/cache/dummy.txt && \
     date >> /app/cache/dummy.txt && \    
     date >> /app/cache/dummy.txt && \    
