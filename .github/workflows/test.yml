@@ -28,6 +28,10 @@ jobs:
         restore-keys: |
           cache-
 
+    - name: Create folder on cache miss
+      run: |
+        mkdir -p cache
+      
     - name: Check for cache after restore
       continue-on-error: true
       run: |
