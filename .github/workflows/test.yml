@@ -70,13 +70,13 @@ jobs:
         mkdir -p cache/sub/dir
 
     # not saving cache https://github.com/reproducible-containers/buildkit-cache-dance/issues/33
-    # - name: inject cache folders into docker
-    #   uses: reproducible-containers/buildkit-cache-dance@v3.1.2
-    #   with:
-    #     cache-map: |
-    #       {
-    #         "cache": "/app/cache/"
-    #       }
+    - name: inject cache folders into docker
+      uses: reproducible-containers/buildkit-cache-dance@v3.1.2
+      with:
+        cache-map: |
+          {
+            "cache/sub/dir": "/app/cache/"
+          }
 
     # ex: https://docs.docker.com/build/ci/github-actions/cache/
     # - name: inject cache folders into docker
@@ -85,17 +85,17 @@ jobs:
     #     cache-source: cache
     #     cache-target: /app/cache
     
-    - name: inject
-      uses: docker/build-push-action@v6
-      with:
-        push: false
-        platforms: ${{ matrix.platform[0] }}
-        # do not cache layers
-        # cache-from: type=local,src=.cache
-        # cache-to: type=local,dest=.cache-new,mode=max
-        file: Dockerfile.inject
-        context: cache/sub/dir
-        build-args: TARGET=/app/cache
+    # - name: inject
+    #   uses: docker/build-push-action@v6
+    #   with:
+    #     push: false
+    #     platforms: ${{ matrix.platform[0] }}
+    #     # do not cache layers
+    #     # cache-from: type=local,src=.cache
+    #     # cache-to: type=local,dest=.cache-new,mode=max
+    #     file: Dockerfile.inject
+    #     context: cache/sub/dir
+    #     build-args: TARGET=/app/cache
 
     - name: Build and push
       uses: docker/build-push-action@v6
@@ -109,18 +109,18 @@ jobs:
         outputs: type=local,dest=dist
         build-args: FILENAME=${{ github.sha }}.bin
 
-    - name: extract
-      uses: docker/build-push-action@v6
-      with:
-        push: false
-        platforms: ${{ matrix.platform[0] }}
-        # do not cache layers
-        # cache-from: type=local,src=.cache
-        # cache-to: type=local,dest=.cache-new,mode=max
-        file: Dockerfile.extract
-        build-args: TARGET=/app/cache
-        outputs: type=local,dest=cache/sub/dir
-        provenance: false
+    # - name: extract
+    #   uses: docker/build-push-action@v6
+    #   with:
+    #     push: false
+    #     platforms: ${{ matrix.platform[0] }}
+    #     # do not cache layers
+    #     # cache-from: type=local,src=.cache
+    #     # cache-to: type=local,dest=.cache-new,mode=max
+    #     file: Dockerfile.extract
+    #     build-args: TARGET=/app/cache
+    #     outputs: type=local,dest=cache/sub/dir
+    #     provenance: false
 
     # - name: Generate file
     #   run: |
