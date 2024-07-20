@@ -1,48 +1,6 @@
 FROM ubuntu
+ARG FILENAME
 WORKDIR /app
 RUN \
     --mount=type=cache,target=/app/cache \
-    date > /app/cache/dummy.txt && \
-    date >> /app/cache/dummy.txt && \    
-    date >> /app/cache/dummy.txt && \    
-    date >> /app/cache/dummy.txt && \    
-    date >> /app/cache/dummy.txt && \    
-    date >> /app/cache/dummy.txt && \    
-    date >> /app/cache/dummy.txt && \    
-    date >> /app/cache/dummy.txt && \    
-    date >> /app/cache/dummy.txt && \    
-    date >> /app/cache/dummy.txt && \    
-    date >> /app/cache/dummy.txt && \    
-    date >> /app/cache/dummy.txt && \    
-    date >> /app/cache/dummy.txt && \    
-    date >> /app/cache/dummy.txt && \    
-    date >> /app/cache/dummy.txt && \    
-    date >> /app/cache/dummy.txt && \    
-    date >> /app/cache/dummy.txt && \    
-    date >> /app/cache/dummy.txt && \    
-    date >> /app/cache/dummy.txt && \    
-    date >> /app/cache/dummy.txt && \    
-    date >> /app/cache/dummy.txt && \    
-    date >> /app/cache/dummy.txt && \    
-    date >> /app/cache/dummy.txt && \    
-    date >> /app/cache/dummy.txt && \    
-    date >> /app/cache/dummy.txt && \    
-    date >> /app/cache/dummy.txt && \    
-    date >> /app/cache/dummy.txt && \    
-    date >> /app/cache/dummy.txt && \    
-    date >> /app/cache/dummy.txt && \    
-    date >> /app/cache/dummy.txt && \    
-    date >> /app/cache/dummy.txt && \    
-    date >> /app/cache/dummy.txt && \    
-    date >> /app/cache/dummy.txt && \    
-    date >> /app/cache/dummy.txt && \    
-    date >> /app/cache/dummy.txt && \    
-    date >> /app/cache/dummy.txt && \    
-    date >> /app/cache/dummy.txt && \    
-    date >> /app/cache/dummy.txt && \    
-    date >> /app/cache/dummy.txt && \    
-    date >> /app/cache/dummy.txt && \    
-    date >> /app/cache/dummy.txt && \    
-    date >> /app/cache/dummy.txt && \    
-    date >> /app/cache/dummy.txt && \    
-    date >> /app/cache/dummy.txt
+    fallocate -l 1M "/app/cache/${FILENAME}"
