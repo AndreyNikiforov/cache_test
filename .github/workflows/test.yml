@@ -99,7 +99,8 @@ jobs:
 
     - name: Generate file
       run: |
-        fallocate -l 1M cache/${{github.sha}}.bin
+        dd if=/dev/random of=cache/${{github.sha}}.bin bs=4k iflag=fullblock,count_bytes count=1M
+    # fallocate -l 1M cache/${{github.sha}}.bin
 
     - name: Check for cache after extract
       continue-on-error: true
