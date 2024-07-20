@@ -82,7 +82,7 @@ jobs:
         # cache-to: type=local,dest=.cache-new,mode=max
         file: Dockerfile
         outputs: type=local,dest=dist
-        build-args: FILENAME="${{ github.sha }}.bin"
+        build-args: FILENAME=${{ github.sha }}.bin
 
     - name: extract
       uses: docker/build-push-action@v6
