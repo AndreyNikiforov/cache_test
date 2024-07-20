@@ -88,6 +88,7 @@ jobs:
         file: Dockerfile.extract
         build-args: TARGET=/app/cache
         outputs: type=local,dest=cache
+        provenance: false
 
     - name: Check for cache after extract
       continue-on-error: true
