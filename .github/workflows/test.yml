@@ -30,19 +30,20 @@ jobs:
 
     - name: Create folder on cache miss
       run: |
-        mkdir -p cache
+        mkdir -p cache/sub/dir
       
     - name: Check for cache after restore
       continue-on-error: true
       run: |
         ls -la
         ls -la cache
+        ls -la cache/sub/dir
 
-    - name: Clear cache 
-      continue-on-error: true
-      run: |
-        rm -rf cache
-        mkdir cache
+    # - name: Clear cache 
+    #   continue-on-error: true
+    #   run: |
+    #     rm -rf cache
+    #     mkdir -p cache/sub/dir
 
     # not saving cache https://github.com/reproducible-containers/buildkit-cache-dance/issues/33
     # - name: inject cache folders into docker
@@ -69,7 +70,7 @@ jobs:
         # cache-from: type=local,src=.cache
         # cache-to: type=local,dest=.cache-new,mode=max
         file: Dockerfile.inject
-        context: cache
+        context: cache/sub/dir
         build-args: TARGET=/app/cache
 
     - name: Build and push
@@ -94,7 +95,7 @@ jobs:
         # cache-to: type=local,dest=.cache-new,mode=max
         file: Dockerfile.extract
         build-args: TARGET=/app/cache
-        outputs: type=local,dest=cache
+        outputs: type=local,dest=cache/sub/dir
         provenance: false
 
     # - name: Generate file
@@ -106,6 +107,7 @@ jobs:
       continue-on-error: true
       run: |
         ls -la cache
+        ls -la cache/sub/dir
   
     # - name: Build with docker
     #     run: |
