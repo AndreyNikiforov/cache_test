@@ -1,4 +1,4 @@
-FROM ubuntu
+FROM python:3.12
 ARG FILENAME
 WORKDIR /app
 RUN \
