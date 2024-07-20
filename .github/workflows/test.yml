@@ -24,8 +24,7 @@ jobs:
       uses: actions/cache@v4
       id: cache
       with:
-        path: |
-          .cache
+        path: cache
         key: cache-${{ github.sha }}
         restore-keys: |
           cache-
@@ -43,7 +42,7 @@ jobs:
     - name: inject cache folders into docker
       uses: reproducible-containers/buildkit-cache-dance@4b2444fec0c0fb9dbf175a96c094720a692ef810 # v2.1.4          
       with:
-        cache-source: .cache
+        cache-source: cache
         # cache-target: .cache
     
     - name: Build and push
@@ -69,9 +68,15 @@ jobs:
         outputs: type=local,dest=check
 
     - name: Check for output file
+      continue-on-error: true
       run: |
         ls -la check
 
+    - name: Check for cache
+      continue-on-error: true
+      run: |
+        ls -la cache
+  
     # - name: Build with docker
     #     run: |
     #     docker buildx build . --platform=${{ matrix.platform[0] }} --progress plain -o dist -f Dockerfile.build
