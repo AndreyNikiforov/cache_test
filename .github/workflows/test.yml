@@ -48,9 +48,9 @@ jobs:
       uses: actions/cache@v4
       with:
         path: cache
-        key: cache-${{ github.sha }}
+        key: cache-${{ matrix.platform[0] }}-${{ github.sha }}
         restore-keys: |
-          cache-
+          cache-${{ matrix.platform[0] }}-
 
     - name: Create folder on cache miss
       run: |
