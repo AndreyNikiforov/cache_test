@@ -39,11 +39,11 @@ jobs:
         ls -la cache
         ls -la cache/sub/dir
 
-    # - name: Clear cache 
-    #   continue-on-error: true
-    #   run: |
-    #     rm -rf cache
-    #     mkdir -p cache/sub/dir
+    - name: Clear cache 
+      continue-on-error: true
+      run: |
+        rm -rf cache
+        mkdir -p cache/sub/dir
 
     # not saving cache https://github.com/reproducible-containers/buildkit-cache-dance/issues/33
     # - name: inject cache folders into docker
