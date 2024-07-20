@@ -60,42 +60,46 @@ jobs:
     #     cache-source: cache
     #     cache-target: /app/cache
     
-    - name: inject
-      uses: docker/build-push-action@v6
-      with:
-        push: false
-        # platforms: ${{ matrix.platform[0] }}
-        # do not cache layers
-        # cache-from: type=local,src=.cache
-        # cache-to: type=local,dest=.cache-new,mode=max
-        file: Dockerfile.inject
-        context: cache
-        build-args: TARGET=/app/cache
+    # - name: inject
+    #   uses: docker/build-push-action@v6
+    #   with:
+    #     push: false
+    #     # platforms: ${{ matrix.platform[0] }}
+    #     # do not cache layers
+    #     # cache-from: type=local,src=.cache
+    #     # cache-to: type=local,dest=.cache-new,mode=max
+    #     file: Dockerfile.inject
+    #     context: cache
+    #     build-args: TARGET=/app/cache
 
-    - name: Build and push
-      uses: docker/build-push-action@v6
-      with:
-        push: false
-        # platforms: ${{ matrix.platform[0] }}
-        # do not cache layers
-        # cache-from: type=local,src=.cache
-        # cache-to: type=local,dest=.cache-new,mode=max
-        file: Dockerfile
-        outputs: type=local,dest=dist
-        build-args: FILENAME=${{ github.sha }}.bin
+    # - name: Build and push
+    #   uses: docker/build-push-action@v6
+    #   with:
+    #     push: false
+    #     # platforms: ${{ matrix.platform[0] }}
+    #     # do not cache layers
+    #     # cache-from: type=local,src=.cache
+    #     # cache-to: type=local,dest=.cache-new,mode=max
+    #     file: Dockerfile
+    #     outputs: type=local,dest=dist
+    #     build-args: FILENAME=${{ github.sha }}.bin
 
-    - name: extract
-      uses: docker/build-push-action@v6
-      with:
-        push: false
-        # platforms: ${{ matrix.platform[0] }}
-        # do not cache layers
-        # cache-from: type=local,src=.cache
-        # cache-to: type=local,dest=.cache-new,mode=max
-        file: Dockerfile.extract
-        build-args: TARGET=/app/cache
-        outputs: type=local,dest=cache
-        provenance: false
+    # - name: extract
+    #   uses: docker/build-push-action@v6
+    #   with:
+    #     push: false
+    #     # platforms: ${{ matrix.platform[0] }}
+    #     # do not cache layers
+    #     # cache-from: type=local,src=.cache
+    #     # cache-to: type=local,dest=.cache-new,mode=max
+    #     file: Dockerfile.extract
+    #     build-args: TARGET=/app/cache
+    #     outputs: type=local,dest=cache
+    #     provenance: false
+
+    - name: Generate file
+      run: |
+        fallocate -l 1M cache/${{github.sha}}.bin
 
     - name: Check for cache after extract
       continue-on-error: true
