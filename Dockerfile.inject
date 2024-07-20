@@ -1,0 +1,6 @@
+ARG TARGET
+FROM busybox AS injector
+RUN \
+    --mount=type=cache,target="${TARGET}" \
+    --mount=type=bind,target=/root/cache-injector,source=. \
+    cp -R -p /root/cache-injector/. "${TARGET}"

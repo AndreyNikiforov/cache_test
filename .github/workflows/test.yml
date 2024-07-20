@@ -44,12 +44,24 @@ jobs:
     #       }
 
     # ex: https://docs.docker.com/build/ci/github-actions/cache/
-    - name: inject cache folders into docker
-      uses: reproducible-containers/buildkit-cache-dance@4b2444fec0c0fb9dbf175a96c094720a692ef810 # v2.1.4          
-      with:
-        cache-source: cache
-        cache-target: /app/cache
+    # - name: inject cache folders into docker
+    #   uses: reproducible-containers/buildkit-cache-dance@4b2444fec0c0fb9dbf175a96c094720a692ef810 # v2.1.4          
+    #   with:
+    #     cache-source: cache
+    #     cache-target: /app/cache
     
+    - name: inject
+      uses: docker/build-push-action@v6
+      with:
+        push: false
+        # platforms: ${{ matrix.platform[0] }}
+        # do not cache layers
+        # cache-from: type=local,src=.cache
+        # cache-to: type=local,dest=.cache-new,mode=max
+        file: Dockerfile.inject
+        context: cache
+        build-args: TARGET=/app/cache
+
     - name: Build and push
       uses: docker/build-push-action@v6
       with:
@@ -61,7 +73,7 @@ jobs:
         file: Dockerfile
         outputs: type=local,dest=dist
 
-    - name: Check
+    - name: extract
       uses: docker/build-push-action@v6
       with:
         push: false
@@ -69,15 +81,11 @@ jobs:
         # do not cache layers
         # cache-from: type=local,src=.cache
         # cache-to: type=local,dest=.cache-new,mode=max
-        file: Dockerfile.check
-        outputs: type=local,dest=check
+        file: Dockerfile.extract
+        build-args: TARGET=/app/cache
+        outputs: type=local,dest=cache
 
-    - name: Check for output file
-      continue-on-error: true
-      run: |
-        ls -la check
-
-    - name: Check for cache
+    - name: Check for cache after extract
       continue-on-error: true
       run: |
         ls -la cache
